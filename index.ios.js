@@ -11,21 +11,42 @@ import {
   Text,
   View
 } from 'react-native';
+import ActionButton from 'react-native-action-button';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {
+  FormInput,
+  FormLabel,
+} from 'react-native-elements';
+
+const ClickTrack = ({ clicks }) => (<Text>Clicks: {clicks}</Text>);
 
 class xtrack extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {clicks: 0};
+  }
+
+  incrementClick() {
+    this.setState({clicks: ++this.state.clicks});
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
+        <FormLabel>Name</FormLabel>
+        <FormInput onChangeText={() => console.log('changed!')}/>
+        <ClickTrack clicks={this.state.clicks} />
+        <ActionButton buttonColor="rgba(231,76,60,1)">
+          <ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => this.incrementClick()}>
+            <Icon name="md-create" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor='#3498db' title="Notifications" onPress={() => {}}>
+            <Icon name="md-notifications-off" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor='#1abc9c' title="All Tasks" onPress={() => {}}>
+            <Icon name="md-done-all" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+        </ActionButton>
       </View>
     );
   }
@@ -38,15 +59,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
+  actionButtonIcon: {
     fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+    height: 22,
+    color: 'white',
   },
 });
 
